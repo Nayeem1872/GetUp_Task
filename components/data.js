@@ -4,11 +4,12 @@ import GetupData from './getupApi';
 import Link from "next/link";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export default function Data() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [active, setActive] = React.useState(0);
   const productsPerPage = 5;
 // MOCK API
   useEffect(() => {
@@ -37,16 +38,16 @@ export default function Data() {
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   // Handle pagination change
-  const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage.selected); // Use setCurrentPage to update the current page
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen px-24">
       <h1 className="font-bold text-2xl mb-4">Mock API Products</h1>
-      <table className="w-full table-auto">
+      <table className="w-full table-auto border-3">
   <thead>
-    <tr>
+    <tr className="bg-blue-400">
       <th className="px-4 py-2 text-left">Image</th>
       <th className="px-4 py-2 text-left">Title</th>
       <th className="px-4 py-2 text-left">Brand</th>
@@ -55,34 +56,40 @@ export default function Data() {
     </tr>
   </thead>
   <tbody>
-    {currentProducts.map(product => (
-      <tr key={product.id}>
-        <td className="px-4 py-2">
-          <img src={product.thumbnail} alt={product.title} className="w-12 h-12" />
-        </td>
-        <td className="px-4 py-2 text-left">{product.title}</td>
-        <td className="px-4 py-2 text-left">{product.brand}</td>
-        <td className="px-4 py-2 text-left">{product.rating}</td>
-        <td className="px-4 py-2 text-left">{product.stock}</td>
-      </tr>
+    {currentProducts.map((product, index) => (
+      <React.Fragment key={product.id}>
+        <tr className={`${index % 2 === 0 ? 'bg-white' : 'bg-blue-50'} hover:bg-blue-100`}>
+          <td className="px-4 py-2">
+            <img src={product.thumbnail} alt={product.title} className="w-12 h-12" />
+          </td>
+          <td className="px-4 py-2 text-left">{product.title}</td>
+          <td className="px-4 py-2 text-left">{product.brand}</td>
+          <td className="px-4 py-2 text-left">{product.rating}</td>
+          <td className="px-4 py-2 text-left">{product.stock}</td>
+        </tr>
+        {index < currentProducts.length - 1 && <tr className="border-b"></tr>}
+      </React.Fragment>
     ))}
   </tbody>
 </table>
+
       {/* Pagination */}
-      <div className="mt-4">
-        <ReactPaginate
-          previousLabel={'←'}
-          nextLabel={'→'}
-          pageCount={Math.ceil(products.length / productsPerPage)}
-          containerClassName={'flex'}
-          pageClassName={'px-3 py-1 rounded-md'}
-          previousLinkClassName={'bg-blue-500 text-white mr-2'}
-          nextLinkClassName={'bg-blue-500 text-white ml-2'}
-          disabledClassName={'text-gray-400'}
-          activeClassName={'bg-blue-500 text-white'}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      <div className="flex items-center mt-4 gap-4">
+  <ReactPaginate
+    pageCount={5}
+    marginPagesDisplayed={1}
+    pageRangeDisplayed={3}
+    onPageChange={handlePageChange}
+    containerClassName="pagination flex gap-2" // Added flex and gap-2 classes
+    pageClassName="px-3 py-1 rounded-md bg-blue-500 text-white cursor-pointer"
+    previousClassName="pagination-arrow"
+    nextClassName="pagination-arrow"
+    disabledClassName="text-gray-400 cursor-not-allowed"
+    activeClassName="bg-blue-700"
+    previousLabel={<IoIosArrowBack strokeWidth={2} className="h-5 w-5 mt-2" />}
+    nextLabel={<IoIosArrowForward strokeWidth={2} className="h-5 w-5 mt-2" />}
+  />
+</div>
       {/* Getup's api */}
       <GetupData />
        {/* Registration */}

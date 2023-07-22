@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import Link from "next/link";
+
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export default function GetupData() {
   const [products, setProducts] = useState([]);
@@ -33,10 +34,10 @@ export default function GetupData() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
 
-      <h1 className="font-bold text-2xl mb-4">Products</h1>
+      <h1 className="font-bold text-2xl mb-4">Getup API Products</h1>
       <table className="w-full table-auto">
         <thead>
-          <tr>
+          <tr className="bg-blue-400">
             <th className="px-4 py-2 text-left">Image</th>
             <th className="px-4 py-2 text-left">Title</th>
             <th className="px-4 py-2 text-left">Brand</th>
@@ -61,20 +62,22 @@ export default function GetupData() {
         </tbody>
       </table>
       {/* Pagination */}
-      <div className="mt-4">
-        <ReactPaginate
-          previousLabel={'←'}
-          nextLabel={'→'}
-          pageCount={Math.ceil(products.length / productsPerPage)}
-          containerClassName={'flex'}
-          pageClassName={'px-3 py-1 rounded-md'}
-          previousLinkClassName={'bg-blue-500 text-white mr-2'}
-          nextLinkClassName={'bg-blue-500 text-white ml-2'}
-          disabledClassName={'text-gray-400'}
-          activeClassName={'bg-blue-500 text-white'}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      <div className="flex items-center mt-4 gap-4">
+  <ReactPaginate
+    pageCount={1}
+    marginPagesDisplayed={1}
+    pageRangeDisplayed={3}
+    onPageChange={handlePageChange}
+    containerClassName="pagination flex gap-2" // Added flex and gap-2 classes
+    pageClassName="px-3 py-1 rounded-md bg-blue-500 text-white cursor-pointer"
+    previousClassName="pagination-arrow"
+    nextClassName="pagination-arrow"
+    disabledClassName="text-gray-400 cursor-not-allowed"
+    activeClassName="bg-blue-700"
+    previousLabel={<IoIosArrowBack strokeWidth={2} className="h-5 w-5 mt-2" />}
+    nextLabel={<IoIosArrowForward strokeWidth={2} className="h-5 w-5 mt-2" />}
+  />
+</div>
            
 
             {/* Login */}
