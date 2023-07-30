@@ -43,7 +43,7 @@ export default function Data() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-24">
+    <div className="flex flex-col mt-5  items-center justify-center px-24">
       <h1 className="font-bold text-2xl mb-4">Mock API Products</h1>
       <table className="w-full table-auto border-3">
   <thead>

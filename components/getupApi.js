@@ -32,7 +32,7 @@ export default function GetupData() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center mt-9 mb-9">
 
       <h1 className="font-bold text-2xl mb-4">Getup API Products</h1>
       <table className="w-full table-auto">
@@ -62,9 +62,9 @@ export default function GetupData() {
         </tbody>
       </table>
       {/* Pagination */}
-      <div className="flex items-center mt-4 gap-4">
+      <div className="flex items-center mt-4  gap-4">
   <ReactPaginate
-    pageCount={1}
+    pageCount={2}
     marginPagesDisplayed={1}
     pageRangeDisplayed={3}
     onPageChange={handlePageChange}

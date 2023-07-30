@@ -27,7 +27,7 @@ export default function Register() {
             const data = response.data;
             if (data.status) {
               // Redirect to the homepage after successful registration
-              router.push("/home");
+              router.push("/login");
             }
           } catch (error) {
             console.error("Error during registration:", error);
